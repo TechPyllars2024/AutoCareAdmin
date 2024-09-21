@@ -1,3 +1,4 @@
+import 'package:autocareadmin/Authentication/screens/admin_login.dart';
 import 'package:autocareadmin/Dashboard/screens/admin_dashboard.dart';
 import 'package:autocareadmin/Dashboard/screens/admin_verify_shop.dart';
 import 'package:flutter/material.dart';
@@ -41,16 +42,16 @@ class DashboardSidebar extends StatelessWidget {
               ],
             ),
           ),
-          ListTile(
-            leading: const Icon(Icons.dashboard),
-            title: const Text('Dashboard'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AdminDashboard()),
-              );
-            },
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.dashboard),
+          //   title: const Text('Dashboard'),
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (context) => AdminDashboard()),
+          //     );
+          //   },
+          // ),
           ListTile(
             leading: const Icon(Icons.storefront_rounded),
             title: const Text('Verify Shops'),
@@ -58,6 +59,16 @@ class DashboardSidebar extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => AdminVerifyShop()),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text('Logout'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AdminLogin()),
               );
             },
           ),
