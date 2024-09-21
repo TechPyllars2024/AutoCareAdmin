@@ -32,31 +32,35 @@ class AdminVerifyShop extends StatelessWidget {
                           child: ConstrainedBox(
                             constraints: BoxConstraints(minWidth: constraints.maxWidth),
                             child: DataTable(
-                              columnSpacing: constraints.maxWidth / 8,
+                              columnSpacing: constraints.maxWidth / 18,
                               columns: const [
                                 DataColumn(label: Text('Status')),
                                 DataColumn(label: Text('Email')),
-                                DataColumn(label: Text('Location')),
+                                DataColumn(label: Text('Shop Name')),
+                                DataColumn(label: Text('Submission Date')),
                                 DataColumn(label: Text('File')),
                               ],
                               rows: const [
                                 DataRow(cells: [
-                                  DataCell(StatusDropdown(initialStatus: 'In Review')),
+                                  DataCell(StatusDropdown(initialStatus: 'Under Review')),
                                   DataCell(Text('example1@example.com')),
-                                  DataCell(Text('Location 1')),
-                                  DataCell(Text('File 1')),
+                                  DataCell(Text('Shop1')),
+                                  DataCell(Text('September 19, 2024')),
+                                  DataCell(Text('File1.pdf')),
                                 ]),
                                 DataRow(cells: [
                                   DataCell(StatusDropdown(initialStatus: 'Verified')),
                                   DataCell(Text('example2@example.com')),
-                                  DataCell(Text('Location 2')),
-                                  DataCell(Text('File 2')),
+                                  DataCell(Text('Shop1')),
+                                  DataCell(Text('September 20, 2024')),
+                                  DataCell(Text('File2.pdf')),
                                 ]),
                                 DataRow(cells: [
                                   DataCell(StatusDropdown(initialStatus: 'Rejected')),
                                   DataCell(Text('example3@example.com')),
-                                  DataCell(Text('Location 3')),
-                                  DataCell(Text('File 3')),
+                                  DataCell(Text('Shop1')),
+                                  DataCell(Text('September 21, 2024')),
+                                  DataCell(Text('File3.pdf')),
                                 ]),
                               ],
                             ),
@@ -102,7 +106,7 @@ class _StatusDropdownState extends State<StatusDropdown> {
           _selectedStatus = newValue!;
         });
       },
-      items: <String>['In Review', 'Verified', 'Rejected']
+      items: <String>['Under Review', 'Verified', 'Rejected']
           .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
