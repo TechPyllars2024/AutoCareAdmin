@@ -23,88 +23,123 @@ class _AdminVerifyShop2State extends State<AdminVerifyShop2> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
-        children: [
-          DashboardSidebar(),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth < 600) {
+          // Mobile layout with Drawer
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('AutoCare Admin'),
+              leading: Builder(
+                builder: (context) {
+                  return IconButton(
+                    icon: const Icon(Icons.menu),
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                  );
+                },
+              ),
+            ),
+            drawer: DashboardSidebar(),
+            body: _buildContent(),
+          );
+        } else {
+          // Desktop layout with permanent sidebar
+          return Scaffold(
+            body: Row(
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text(
-                    'Verify Shops',
-                    style: TextStyle(
-                      fontSize: 48,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: VerifyShopFilter(onFilterChanged: _onFilterChanged),
+                SizedBox(
+                  width: 250,
+                  child: DashboardSidebar(),
                 ),
                 Expanded(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Padding(
-                          padding: const EdgeInsets.all(32),
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints(minWidth: constraints.maxWidth),
-                            child: DataTable(
-                              columnSpacing: constraints.maxWidth / 18,
-                              columns: const [
-                                DataColumn(
-                                  label: SizedBox(
-                                    width: 150, // Fixed width for the column
-                                    child: Text('Status'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: SizedBox(
-                                    width: 150, // Fixed width for the column
-                                    child: Text('Email'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: SizedBox(
-                                    width: 150, // Fixed width for the column
-                                    child: Text('Shop Name'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: SizedBox(
-                                    width: 150, // Fixed width for the column
-                                    child: Text('Submission Date'),
-                                  ),
-                                ),
-                                DataColumn(
-                                  label: SizedBox(
-                                    width: 150, // Fixed width for the column
-                                    child: Text('File'),
-                                  ),
-                                ),
-                              ],
-                              rows: _getFilteredRows(),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                  child: _buildContent(),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
+          );
+        }
+      },
     );
   }
 
-  // example table
+  Widget _buildContent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text(
+            'Verify Shops',
+            style: TextStyle(
+              fontSize: 48,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: VerifyShopFilter(onFilterChanged: _onFilterChanged),
+          ),
+        ),
+        Expanded(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.all(32),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                    child: DataTable(
+                      columnSpacing: constraints.maxWidth / 18,
+                      columns: const [
+                        DataColumn(
+                          label: SizedBox(
+                            width: 150, // Fixed width for the column
+                            child: Text('Status'),
+                          ),
+                        ),
+                        DataColumn(
+                          label: SizedBox(
+                            width: 150, // Fixed width for the column
+                            child: Text('Email'),
+                          ),
+                        ),
+                        DataColumn(
+                          label: SizedBox(
+                            width: 150, // Fixed width for the column
+                            child: Text('Shop Name'),
+                          ),
+                        ),
+                        DataColumn(
+                          label: SizedBox(
+                            width: 150, // Fixed width for the column
+                            child: Text('Submission Date'),
+                          ),
+                        ),
+                        DataColumn(
+                          label: SizedBox(
+                            width: 150, // Fixed width for the column
+                            child: Text('File'),
+                          ),
+                        ),
+                      ],
+                      rows: _getFilteredRows(),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
   List<DataRow> _getFilteredRows() {
     final DateFormat dateFormat = DateFormat('MMMM d, yyyy');
     final rows = [
@@ -226,17 +261,17 @@ class _StatusDropdownState extends State<StatusDropdown> {
           _selectedStatus = newValue!;
         });
       },
-        items: <String>['Under Review', 'Verified', 'Rejected']
-            .map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Container(
-              color: _getStatusColor(value),
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-              child: Text(value),
-            ),
-          );
-        }).toList(),
+      items: <String>['Under Review', 'Verified', 'Rejected']
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Container(
+            color: _getStatusColor(value),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+            child: Text(value),
+          ),
+        );
+      }).toList(),
     );
   }
 }
