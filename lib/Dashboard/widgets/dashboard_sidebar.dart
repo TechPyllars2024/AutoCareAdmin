@@ -1,7 +1,6 @@
-import 'package:autocareadmin/Authentication/screens/admin_login.dart';
-import 'package:autocareadmin/Dashboard/screens/admin_dashboard.dart';
-import 'package:autocareadmin/Dashboard/screens/admin_verify_shop.dart';
 import 'package:flutter/material.dart';
+import 'package:autocareadmin/Authentication/screens/admin_login.dart';
+import 'package:autocareadmin/Dashboard/screens/admin_verify_shop.dart';
 
 class DashboardSidebar extends StatelessWidget {
   @override
@@ -39,19 +38,17 @@ class DashboardSidebar extends StatelessWidget {
                     ],
                   ),
                 ),
+                const Text(
+                  'Admin',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
           ),
-          // ListTile(
-          //   leading: const Icon(Icons.dashboard),
-          //   title: const Text('Dashboard'),
-          //   onTap: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(builder: (context) => AdminDashboard()),
-          //     );
-          //   },
-          // ),
           ListTile(
             leading: const Icon(Icons.storefront_rounded),
             title: const Text('Verify Shops'),
