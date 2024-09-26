@@ -1,16 +1,3 @@
-# autocareadmin
+# AutoCare Admin
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The Admin Side of the AutoCare app is solely focused on verifying auto-repair shops. Admins can view a list of pending shop applications, review submitted documents, and either approve or reject shops based on compliance with platform standards. The interface includes tools for document review and quick approval actions. By simplifying the admin’s role just to shop verification, the system ensures that only legitimate and qualified businesses are listed, maintaining the integrity of the AutoCare platform.
