@@ -1,7 +1,6 @@
+import 'package:autocareadmin/Authentication/screens/admin_login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-import 'Dashboard/screens/admin_verify_shop.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: AdminVerifyShop(),
+      home: const AdminLogin(),
     );
   }
 }
