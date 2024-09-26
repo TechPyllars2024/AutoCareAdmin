@@ -1,11 +1,10 @@
 import 'dart:ui';
 
-// import 'package:autocareadmin/Dashboard/screens/admin_verify_shop.dart';
 import 'package:flutter/material.dart';
 import 'package:autocareadmin/Authentication/service/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../../Dashboard/screens/verifushop2.dart';
+import '../../Dashboard/screens/admin_verify_shop.dart';
 import '../widgets/alertMessage.dart';
 
 class AdminLogin extends StatefulWidget {
@@ -65,7 +64,7 @@ class _AdminLoginState extends State<AdminLogin> {
       // Navigate to verify shops page after login
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => AdminVerifyShop2()),
+        MaterialPageRoute(builder: (context) => AdminVerifyShop()),
       );
 
     } catch (e) {
