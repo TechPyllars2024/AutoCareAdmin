@@ -45,13 +45,26 @@ class _VerifyShopFilterState extends State<VerifyShopFilter> {
   Color _getStatusColor(String status) {
     switch (status) {
       case 'Under Review':
-        return Colors.yellow;
+        return const Color(0xffffe599);
       case 'Verified':
-        return Colors.green;
+        return const Color(0xffd9ead3);
       case 'Rejected':
-        return Colors.red;
+        return const Color(0xfff4cccc);
       default:
         return Colors.transparent;
+    }
+  }
+
+  TextStyle _getStatusTextStyle(String status) {
+    switch (status) {
+      case 'Under Review':
+        return TextStyle(color: Colors.orange[700], fontWeight: FontWeight.bold);
+      case 'Verified':
+        return TextStyle(color: Colors.green[700], fontWeight: FontWeight.bold);
+      case 'Rejected':
+        return TextStyle(color: Colors.red[700], fontWeight: FontWeight.bold);
+      default:
+        return const TextStyle();
     }
   }
 
@@ -97,7 +110,10 @@ class _VerifyShopFilterState extends State<VerifyShopFilter> {
                 child: Container(
                   color: _getStatusColor(value),
                   padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                  child: Text(value),
+                  child: Text(
+                    value,
+                    style: _getStatusTextStyle(value),
+                  ),
                 ),
               );
             }).toList(),
