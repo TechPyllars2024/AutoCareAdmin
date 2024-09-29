@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../services/verifyShop_service.dart';
 import '../widgets/dashboard_sidebar.dart';
-import '../widgets/verify_shop_filter.dart';
 
 class AdminVerifyShopScreen extends StatefulWidget {
   const AdminVerifyShopScreen({super.key});
@@ -74,13 +74,13 @@ class _AdminVerifyShopScreenState extends State<AdminVerifyShopScreen> {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: VerifyShopFilter(onFilterChanged: _onFilterChanged),
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        //   child: SingleChildScrollView(
+        //     scrollDirection: Axis.horizontal,
+        //     child: VerifyShopFilter(onFilterChanged: _onFilterChanged),
+        //   ),
+        // ),
         Expanded(
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -123,10 +123,37 @@ class _AdminVerifyShopScreenState extends State<AdminVerifyShopScreen> {
         DataCell(Text(shop['location'] ?? 'N/A')),
         DataCell(Text(shop['dateSubmitted'] ?? 'N/A')),
         DataCell(Text(shop['timeSubmitted'] ?? 'N/A')),
-        DataCell(Text(shop['fileUrl'] ?? 'N/A')),
+        DataCell(
+          GestureDetector(
+            onTap: () async {
+              final Uri url = Uri.parse(shop['fileUrl'] ?? '');
+              if (await canLaunch(url.toString())) {
+                await launch(url.toString());
+              } else {
+                // Handle the error (e.g., show a snackbar)
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Could not launch URL')),
+                );
+              }
+            },
+            child: Text(
+              _shortenUrl(shop['fileUrl'] ?? 'N/A'),
+              style: const TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
+            ),
+          ),
+        ),
       ]);
     }).toList();
   }
+
+  String _shortenUrl(String url) {
+    const int maxLength = 30; // Maximum length before shortening
+    if (url.length > maxLength) {
+      return '${url.substring(0, maxLength)}...'; // Shorten the URL
+    }
+    return url; // Return full URL if it's short enough
+  }
+
 }
 
 
