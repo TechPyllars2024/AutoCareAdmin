@@ -1,5 +1,4 @@
 import 'package:autocareadmin/Authentication/screens/admin_login.dart';
-import 'package:autocareadmin/Dashboard/screens/admin_verify_shop.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
