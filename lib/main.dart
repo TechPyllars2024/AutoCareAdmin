@@ -1,6 +1,4 @@
 import 'package:autocareadmin/Authentication/screens/admin_login.dart';
-import 'package:autocareadmin/Dashboard/screens/admin_verify_shop.dart';
-import 'package:autocareadmin/Dashboard/screens/verify_shop_new.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: AdminVerifyShopScreen(),
+      home: AdminLogin(),
     );
   }
 }
