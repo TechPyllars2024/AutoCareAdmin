@@ -25,4 +25,15 @@ class VerifyShopService {
       logger.e('Error updating verification status for $serviceProviderUid: $e');
     }
   }
+
+  Future<void> updateVerificationStatusForValidationModel(String serviceProviderUid, String newStatus) async {
+    try {
+      await _firestore.collection('verificationData').doc(serviceProviderUid).update({
+        'verificationStatus': newStatus,
+      });
+      logger.i('Successfully updated verification status for $serviceProviderUid to $newStatus');
+    } catch (e) {
+      logger.e('Error updating verification status for $serviceProviderUid: $e');
+    }
+  }
 }

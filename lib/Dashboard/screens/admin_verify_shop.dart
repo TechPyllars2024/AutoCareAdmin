@@ -116,7 +116,7 @@ class _AdminVerifyShopScreenState extends State<AdminVerifyShopScreen> {
     return _shopsData.map((shop) {
       return DataRow(cells: [
         DataCell(StatusDropdown(
-          initialStatus: shop['verificationStatus'] ?? 'Pending',
+          initialStatus: shop['verificationStatus'] ?? '',
           shopId: shop['uid'] ?? '',
         )),
         DataCell(Text(shop['shopName'] ?? 'N/A')),
@@ -160,6 +160,7 @@ class _StatusDropdownState extends State<StatusDropdown> {
       _isLoading = true; // Set loading state
     });
       await VerifyShopService().updateVerificationStatus(widget.shopId, newStatus);
+      await VerifyShopService().updateVerificationStatusForValidationModel(widget.shopId, newStatus);
     setState(() {
       _isLoading = false; // Reset loading state
     });
