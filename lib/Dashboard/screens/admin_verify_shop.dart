@@ -22,11 +22,11 @@ class _AdminVerifyShopScreenState extends State<AdminVerifyShopScreen> {
     _fetchVerificationData();
   }
 
-  void _onFilterChanged(String? status) {
-    setState(() {
-      _selectedStatus = status;
-    });
-  }
+  // void _onFilterChanged(String? status) {
+  //   setState(() {
+  //     _selectedStatus = status;
+  //   });
+  // }
 
   Future<void> _fetchVerificationData() async {
     List<Map<String, dynamic>> data = await _verifyShopService.fetchVerificationData();
