@@ -64,7 +64,7 @@ class _AdminLoginState extends State<AdminLogin> {
       // Navigate to verify shops page after login
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => AdminVerifyShop()),
+        MaterialPageRoute(builder: (context) => AdminVerifyShopScreen()),
       );
 
     } catch (e) {
