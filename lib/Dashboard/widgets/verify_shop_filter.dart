@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class VerifyShopFilter extends StatefulWidget {
-  final Function(String?, DateTime?, DateTime?) onFilterChanged;
+  final Function(String?) onFilterChanged;
 
   const VerifyShopFilter({required this.onFilterChanged});
 
@@ -11,40 +11,17 @@ class VerifyShopFilter extends StatefulWidget {
 
 class _VerifyShopFilterState extends State<VerifyShopFilter> {
   String? _selectedStatus;
-  DateTime? _startDate;
-  DateTime? _endDate;
-
-  void _selectDate({required bool isStartDate}) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null) {
-      setState(() {
-        if (isStartDate) {
-          _startDate = picked;
-        } else {
-          _endDate = picked;
-        }
-      });
-      widget.onFilterChanged(_selectedStatus, _startDate, _endDate);
-    }
-  }
 
   void _resetFilters() {
     setState(() {
       _selectedStatus = null;
-      _startDate = null;
-      _endDate = null;
     });
-    widget.onFilterChanged(_selectedStatus, _startDate, _endDate);
+    widget.onFilterChanged(_selectedStatus);
   }
 
   Color _getStatusColor(String status) {
     switch (status) {
-      case 'Under Review':
+      case 'Pending':
         return const Color(0xffffe599);
       case 'Verified':
         return const Color(0xffd9ead3);
@@ -57,7 +34,7 @@ class _VerifyShopFilterState extends State<VerifyShopFilter> {
 
   TextStyle _getStatusTextStyle(String status) {
     switch (status) {
-      case 'Under Review':
+      case 'Pending':
         return TextStyle(color: Colors.orange[700], fontWeight: FontWeight.bold);
       case 'Verified':
         return TextStyle(color: Colors.green[700], fontWeight: FontWeight.bold);
@@ -101,9 +78,9 @@ class _VerifyShopFilterState extends State<VerifyShopFilter> {
               setState(() {
                 _selectedStatus = newValue;
               });
-              widget.onFilterChanged(_selectedStatus, _startDate, _endDate);
+              widget.onFilterChanged(_selectedStatus);
             },
-            items: <String>['Under Review', 'Verified', 'Rejected']
+            items: <String>['Pending', 'Verified', 'Rejected']
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -119,16 +96,6 @@ class _VerifyShopFilterState extends State<VerifyShopFilter> {
             }).toList(),
           ),
         ],
-      ),
-      const SizedBox(height: 12.0),
-      ElevatedButton(
-        onPressed: () => _selectDate(isStartDate: true),
-        child: const Text('Select Start Date'),
-      ),
-      const SizedBox(height: 12.0),
-      ElevatedButton(
-        onPressed: () => _selectDate(isStartDate: false),
-        child: const Text('Select End Date'),
       ),
       const SizedBox(height: 12.0),
       ElevatedButton(

@@ -55,7 +55,7 @@ class DashboardSidebar extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AdminVerifyShop()),
+                MaterialPageRoute(builder: (context) => AdminVerifyShopScreen()),
               );
             },
           ),
