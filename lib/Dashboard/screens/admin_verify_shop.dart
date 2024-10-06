@@ -22,12 +22,6 @@ class _AdminVerifyShopScreenState extends State<AdminVerifyShopScreen> {
     _fetchVerificationData();
   }
 
-  // void _onFilterChanged(String? status) {
-  //   setState(() {
-  //     _selectedStatus = status;
-  //   });
-  // }
-
   Future<void> _fetchVerificationData() async {
     List<Map<String, dynamic>> data = await _verifyShopService.fetchVerificationData();
     setState(() {
@@ -74,13 +68,6 @@ class _AdminVerifyShopScreenState extends State<AdminVerifyShopScreen> {
             ),
           ),
         ),
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        //   child: SingleChildScrollView(
-        //     scrollDirection: Axis.horizontal,
-        //     child: VerifyShopFilter(onFilterChanged: _onFilterChanged),
-        //   ),
-        // ),
         Expanded(
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -155,7 +142,6 @@ class _AdminVerifyShopScreenState extends State<AdminVerifyShopScreen> {
   }
 
 }
-
 
 class StatusDropdown extends StatefulWidget {
   final String initialStatus;
@@ -238,6 +224,8 @@ class _StatusDropdownState extends State<StatusDropdown> {
 
   Color _getStatusColor(String status) {
     switch (status) {
+      case 'Not Submitted':
+        return const Color(0x8A000000);
       case 'Pending':
         return const Color(0xffffe599);
       case 'Verified':
