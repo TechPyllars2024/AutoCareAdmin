@@ -197,7 +197,7 @@ class _StatusDropdownState extends State<StatusDropdown> {
   Widget build(BuildContext context) {
     print('Initial Status: $_selectedStatus');
 
-    List<String> statuses = ['Pending', 'Verified', 'Rejected'];
+    List<String> statuses = ['Not Submitted', 'Pending', 'Verified', 'Rejected'];
 
     // Debugging log to check dropdown items
     print('Dropdown Items: $statuses');
