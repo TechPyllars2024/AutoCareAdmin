@@ -68,26 +68,44 @@ class _AdminVerifyShopScreenState extends State<AdminVerifyShopScreen> {
             ),
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.refresh),
+                onPressed: _fetchVerificationData,
+              ),
+              const Text(
+                'Refresh',
+                style: TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
+        ),
         Expanded(
           child: LayoutBuilder(
             builder: (context, constraints) {
               return SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.all(32),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(minWidth: constraints.maxWidth),
-                    child: DataTable(
-                      columnSpacing: constraints.maxWidth / 18,
-                      columns: const [
-                        DataColumn(label: SizedBox(width: 100, child: Text('Status'))),
-                        DataColumn(label: SizedBox(width: 100, child: Text('Shop Name'))),
-                        DataColumn(label: SizedBox(width: 100, child: Text('Shop Address'))),
-                        DataColumn(label: SizedBox(width: 100, child: Text('Submission Date'))),
-                        DataColumn(label: SizedBox(width: 100, child: Text('Submission Time'))),
-                        DataColumn(label: SizedBox(width: 100, child: Text('File'))),
-                      ],
-                      rows: _buildRows(),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                      child: DataTable(
+                        columnSpacing: constraints.maxWidth / 50,
+                        columns: const [
+                          DataColumn(label: SizedBox(width: 50, child: Text('Status'))),
+                          DataColumn(label: SizedBox(width: 80, child: Text('Shop Name'))),
+                          DataColumn(label: SizedBox(width: 120, child: Text('Shop Address'))),
+                          DataColumn(label: SizedBox(width: 120, child: Text('Submission Date'))),
+                          DataColumn(label: SizedBox(width: 120, child: Text('Submission Time'))),
+                          DataColumn(label: SizedBox(width: 50, child: Text('File'))),
+                        ],
+                        rows: _buildRows(),
+                      ),
                     ),
                   ),
                 ),
@@ -99,13 +117,26 @@ class _AdminVerifyShopScreenState extends State<AdminVerifyShopScreen> {
     );
   }
 
+  String getFileNameFromUrl(String url) {
+    if (url.isEmpty) return 'N/A';
+
+    try {
+      String fullFileName = Uri.parse(url).pathSegments.last;
+
+      return fullFileName.contains('/') ? fullFileName.split('/').last : fullFileName;
+    } catch (e) {
+      return 'N/A';
+    }
+  }
+
   List<DataRow> _buildRows() {
     return _shopsData.map((shop) {
       return DataRow(cells: [
         DataCell(StatusDropdown(
           initialStatus: shop['verificationStatus'] ?? '',
           shopId: shop['uid'] ?? '',
-        )),
+        )
+        ),
         DataCell(Text(shop['shopName'] ?? 'N/A')),
         DataCell(Text(shop['location'] ?? 'N/A')),
         DataCell(Text(shop['dateSubmitted'] ?? 'N/A')),
@@ -117,14 +148,13 @@ class _AdminVerifyShopScreenState extends State<AdminVerifyShopScreen> {
               if (await canLaunch(url.toString())) {
                 await launch(url.toString());
               } else {
-                // Handle the error (e.g., show a snackbar)
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Could not launch URL')),
                 );
               }
             },
             child: Text(
-              _shortenUrl(shop['fileUrl'] ?? 'N/A'),
+              _shortenUrl(getFileNameFromUrl(shop['fileUrl'] ?? 'N/A')),
               style: const TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
             ),
           ),
@@ -134,11 +164,11 @@ class _AdminVerifyShopScreenState extends State<AdminVerifyShopScreen> {
   }
 
   String _shortenUrl(String url) {
-    const int maxLength = 30; // Maximum length before shortening
+    const int maxLength = 30;
     if (url.length > maxLength) {
-      return '${url.substring(0, maxLength)}...'; // Shorten the URL
+      return '${url.substring(0, maxLength)}...';
     }
-    return url; // Return full URL if it's short enough
+    return url;
   }
 
 }
@@ -185,17 +215,16 @@ class _StatusDropdownState extends State<StatusDropdown> {
 
     List<String> statuses = ['Not Submitted', 'Pending', 'Verified', 'Rejected'];
 
-    // Debugging log to check dropdown items
     print('Dropdown Items: $statuses');
 
-    // Ensure the initial status is one of the items
+
     if (!statuses.contains(_selectedStatus)) {
       print('Warning: Initial status $_selectedStatus is not in the dropdown items.');
-      _selectedStatus = statuses.first; // Fallback to the first status if not found
+      _selectedStatus = statuses.first;
     }
 
     return _isLoading
-        ? const CircularProgressIndicator() // Show loading indicator
+        ? const CircularProgressIndicator()
         : DropdownButton<String>(
       value: _selectedStatus,
       onChanged: (String? newValue) async {
@@ -239,6 +268,8 @@ class _StatusDropdownState extends State<StatusDropdown> {
 
   TextStyle _getStatusTextStyle(String status) {
     switch (status) {
+      case 'Not Submitted':
+        return const TextStyle(color: Colors.white, fontWeight: FontWeight.bold);
       case 'Pending':
         return TextStyle(color: Colors.orange[700], fontWeight: FontWeight.bold);
       case 'Verified':
